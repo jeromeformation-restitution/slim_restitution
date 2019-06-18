@@ -7,7 +7,7 @@ use Psr\Http\Message\ServerRequestInterface;
 $app->get('/homepage', function (ServerRequestInterface $request, ResponseInterface $response, array $args)
 {
 
-    $response->getBody()->write("<a href='secondpage'><h1>Hello</h1></a>");
+    $response->getBody()->write('<a href="/produit/liste"><h1>Hello</h1></a>');
 
     return $response;
 });
