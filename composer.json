@@ -1,0 +1,13 @@
+{
+    "name": "stagiaire/slim_restitution",
+    "description": "Restitution quotidienne",
+    "authors": [
+        {
+            "name": "Jerome",
+            "email": "ambroise.jerome.formation@gmail.com"
+        }
+    ],
+    "require": {
+        "slim/slim": "^3.12"
+    }
+}
