@@ -10,6 +10,8 @@ require '../vendor/autoload.php';
 $config = require dirname(__DIR__) . "/config/config.php";
 $app = new App($config);
 
+require dirname(__DIR__) . "/config/container.php";
+
 require dirname(__DIR__) . "/config/routes.php";
 
 $app->run();

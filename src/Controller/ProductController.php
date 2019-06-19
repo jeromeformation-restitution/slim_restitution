@@ -1,22 +1,34 @@
 <?php
+
 namespace App\Controller;
 
+use App\Entity\Produit;
+use App\Utilities\AbstractController;
+use App\Utilities\Database;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-class ProductController {
+class ProductController extends AbstractController
+{
+
     public function liste(ServerRequestInterface $request, ResponseInterface $response, array $args)
     {
-
-        $response->getBody()->write("Hello2");
-
-        return $response;
+        // Connexion à la BDD
+        $database = new Database();
+        // Requête SQL
+        $query = "SELECT * FROM produit WHERE etat_publication = 1";
+        // Exécution de la requête SQL et récupération des produits
+        $products = $database->query($query, Produit::class);
+        return $this->twig->render($response, 'products/liste.twig',
+            ['products' => $products
+        ]);
     }
-    public function show(ServerRequestInterface $request,ResponseInterface $response, array $args)
-    {
-        $index = $args["id"];
-        $response->getBody()->write("Page de mes produits" . $index);
 
-        return $response;
+    public function show(ServerRequestInterface $request, ResponseInterface $response, array $args)
+    {
+        //$index = $args["id"];
+        return $this->twig->render($response, 'products/details.twig');
     }
 }
+
+
