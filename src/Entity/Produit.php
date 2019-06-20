@@ -178,5 +178,4 @@ class Produit
     {
         $this->imageName = $imageName;
     }
-
 }

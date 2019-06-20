@@ -1,3 +1,22 @@
 {% extends "base.twig" %}
 
-{% block body %}<h1>Détails des produits</h1>{% endblock %}
+{% block body %}
+
+    <main class="container">
+        <h1 class="mt-2">Détails du produit</h1>
+        <section class="row">
+                <div class="col-4">
+                    <div class="card">
+                        <img src="/img/uploads/{{ product.getImageName() }}" class="card-img-top"
+                             alt="Image de {{ product.getName() }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ product.getName() }}</h5>
+                            <p class="card-text">{{ product.getShortDescription() }}</p>
+                        </div>
+                    </div>
+                </div>
+        </section>
+    </main>
+{% endblock %}
+
+

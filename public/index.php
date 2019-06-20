@@ -1,16 +1,19 @@
 <?php
-
-use App\Controller\ProductController;
-use \Psr\Http\Message\ServerRequestInterface;
-use \Psr\Http\Message\ResponseInterface;
+session_start();
+use DI\ContainerBuilder;
 use Slim\App;
 
 require '../vendor/autoload.php';
 
-$config = require dirname(__DIR__) . "/config/config.php";
-$app = new App($config);
+// PHP-DI
+$builder = new ContainerBuilder();
+$builder->addDefinitions(
+    dirname(__DIR__) . '/config/container.php',
+    dirname(__DIR__) . '/config/config.php'
+);
+$container = $builder->build();
 
-require dirname(__DIR__) . "/config/container.php";
+$app = new App($container);
 
 require dirname(__DIR__) . "/config/routes.php";
 

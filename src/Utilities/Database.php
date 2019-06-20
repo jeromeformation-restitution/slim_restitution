@@ -15,23 +15,22 @@ class Database
     /**
      * On crée un constructeur pour initialiser PDO automatiquement
      */
-    public function __construct()
+    public function __construct(string $dbUser, string $dbName, string $dbHost, ?string $dbPass = null)
     {
-        $this->connect();
+        $this->connect($dbUser, $dbName, $dbHost, $dbPass);
     }
 
     /**
      * Créer une instance de PDO
      */
-    public function connect(): void
+    public function connect(string $dbUser, string $dbName, string $dbHost, ?string $dbPass = null): void
     {
         // Connexion à MySQL
         $this->pdo = new \PDO(
-            'mysql:host=localhost;dbname=catalogue',
-            'root',
-            null,
+            'mysql:host=' . $dbHost . ';dbname=' . $dbName . ';charset=utf8mb4',
+            $dbUser,
+            $dbPass,
             [
-                \PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8mb4",
                 \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION
             ]
         );
@@ -50,6 +49,14 @@ class Database
         // Récupération des résultats
         return $result->fetchAll(\PDO::FETCH_CLASS|\PDO::FETCH_PROPS_LATE, $className);
     }
+    public function queryPrepared(string $sql, string $className, array $params): ?array
+    {
+        // Execution de la requête
+        $result = $this->pdo->prepare($sql);
+        $result->execute($params);
+        // Récupération des résultats
+        return $result->fetchAll(\PDO::FETCH_CLASS|\PDO::FETCH_PROPS_LATE, $className);
+    }
 
     /**
      * Execute une requête SQL pour :
@@ -64,4 +71,3 @@ class Database
         return $this->pdo->exec($sql);
     }
 }
-

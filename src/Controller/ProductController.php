@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Produit;
 use App\Utilities\AbstractController;
-use App\Utilities\Database;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -13,22 +12,31 @@ class ProductController extends AbstractController
 
     public function liste(ServerRequestInterface $request, ResponseInterface $response, array $args)
     {
-        // Connexion à la BDD
-        $database = new Database();
         // Requête SQL
         $query = "SELECT * FROM produit WHERE etat_publication = 1";
         // Exécution de la requête SQL et récupération des produits
-        $products = $database->query($query, Produit::class);
-        return $this->twig->render($response, 'products/liste.twig',
+        $products = $this->database->query($query, Produit::class);
+        return $this->twig->render(
+            $response,
+            'products/liste.twig',
             ['products' => $products
-        ]);
+            ]
+        );
     }
 
     public function show(ServerRequestInterface $request, ResponseInterface $response, array $args)
     {
-        //$index = $args["id"];
-        return $this->twig->render($response, 'products/details.twig');
+        $id = $args["id"];
+        $query = "SELECT * FROM produit WHERE etat_publication = 1 AND id = ?";
+        $product = $this->database->queryPrepared($query, Produit::class, [$id]);
+        if (empty($product)) {
+            return $this->twig->render($response, 'errors/error404.twig')->withStatus(404);
+        }
+        return $this->twig->render(
+            $response,
+            'products/details.twig',
+            ["product" => $product[0]
+            ]
+        );
     }
 }
-
-
