@@ -8,11 +8,9 @@ use Slim\Views\Twig;
 class AbstractController
 {
     protected $twig;
-    protected $database;
 
-    public function __construct(Twig $twig, Database $database)
+    public function __construct(Twig $twig)
     {
         $this->twig = $twig;
-        $this->database = $database;
     }
 }

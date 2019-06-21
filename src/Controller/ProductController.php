@@ -3,19 +3,27 @@
 namespace App\Controller;
 
 use App\Entity\Produit;
+use App\Repository\ProductRepository;
 use App\Utilities\AbstractController;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Slim\Views\Twig;
 
 class ProductController extends AbstractController
 {
+    /**
+     * @var ProductRepository
+     */
+    private $productRepository;
+
+
+
+
 
     public function liste(ServerRequestInterface $request, ResponseInterface $response, array $args)
     {
-        // Requête SQL
-        $query = "SELECT * FROM produit WHERE etat_publication = 1";
-        // Exécution de la requête SQL et récupération des produits
-        $products = $this->database->query($query, Produit::class);
+        $products=$this->productRepository->findAll();
+
         return $this->twig->render(
             $response,
             'products/liste.twig',
@@ -38,5 +46,13 @@ class ProductController extends AbstractController
             ["product" => $product[0]
             ]
         );
+    }
+
+
+    public function __construct(Twig $twig, ProductRepository $productRepository)
+    {
+        $this->productRepository=$productRepository;
+
+        parent::__construct($twig);
     }
 }
