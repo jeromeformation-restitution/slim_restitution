@@ -1,4 +1,6 @@
 <?php
+
+
 namespace App\Repository;
 
 use App\Entity\Produit;
@@ -6,9 +8,8 @@ use App\Entity\User;
 use App\Utilities\AbstractRepository;
 use App\Utilities\Database;
 
-class ProductRepository extends AbstractRepository
+class UserRepository extends AbstractRepository
 {
-
 
 
     /**
@@ -17,7 +18,7 @@ class ProductRepository extends AbstractRepository
      */
     public function tableName(): string
     {
-        return 'produit';
+        return 'app_user';
     }
 
     /**
@@ -26,6 +27,6 @@ class ProductRepository extends AbstractRepository
      */
     public function entityName(): string
     {
-        return Produit::class;
+        return User::class;
     }
 }

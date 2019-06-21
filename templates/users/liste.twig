@@ -1,0 +1,28 @@
+{% extends "base.twig" %}
+
+{% block body %}
+
+    <h1>Liste des produits</h1>
+    <br>
+
+    <main class="container">
+        <h1 class="mt-2">Présentation des users</h1>
+        <section class="row">
+
+            {% for user in users %}
+                <div class="col-4">
+                    <div class="card">
+
+                        <div class="card-body">
+                            <h5 class="card-title">{{ user.username }}</h5>
+                            <p class="card-text">{{ user.email }}</p>
+                            <p class="card-text">{{ user.role }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+
+        </section>
+    </main>
+{% endblock %}
